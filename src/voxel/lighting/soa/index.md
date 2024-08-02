@@ -8,7 +8,7 @@ Retrieved from:
 
 # Lighting
 
-![ColouredCave](/voxel/lighting/soa/ColoredCave.jpg)
+![ColouredCave](./ColoredCave.jpg)
 
 So you have a basic blocky voxel engine, and you want to implement lighting. The easy route would be to use standard deferred dynamic lighting like in most other games. However, dynamic lighting has a few issues.
 
@@ -107,7 +107,7 @@ Ok we have our storage! Now what? Well lets start with torchlight. If the player
 we might call chunk.setSunlight(x, y, z, 14). But now we need to spread the light outwards in each direction,
 reducing the light level by 1 at each block until we are at zero. Check out the image below, that I shamelessly stole from minecraft.gamepedia.
 
-![TorchlightDistance](/voxel/lighting/soa/TorchlightDistance.jpg)
+![TorchlightDistance](./TorchlightDistance.jpg)
 
 In this image, a yellow T box is a torch, and each torch has a light level of 14. As you can see, light level decreases by 1 for each cell that you move away from a torch. Notice that along the green diagonal, light level decreases by two instead of one. This is because distance from the light is calculated as X distance + Y distance, instead of a true linear distance calculation. Keep in mind this is happening in 3D, which the image does not illustrate.
 
@@ -307,7 +307,7 @@ Notice that in step 4 we added an else if that checks to see if the neighbor lig
 
 # Sunlight
 
-![Sunlight](/voxel/lighting/soa/Sunlight.jpg)
+![Sunlight](./Sunlight.jpg)
 
 We have learned the basics of voxel light propagation, but we have not yet covered the special case of sunlight. Assuming that you are using cubic chunks, how do we determine if a block is in sunlight or not? How do we deal with sunlight coming from unloaded chunks?
 
@@ -357,7 +357,7 @@ And voila! We have a proper day/night cycle!
 
 # Colored Light
 
-![RGB](/voxel/lighting/soa/RGB.jpg)
+![RGB](./RGB.jpg)
 
 We know how to propagate torchlight of a single color, but what if we want users to be able to place lights with many different colors? We need to make sure these colors blend together correctly, since the player should be allowed to mix all of our colors. To do this, we are going to need to store more data in the torchlight.
 
@@ -415,7 +415,7 @@ When all nonzero light color channels are equal, such as a magenta torch where (
 
 In reality, as a color attenuates the ratio of the color channels should remain equal as the brightness approaches zero. Unfortunatly, since each channel decreases by 1 at each voxel this is not true with our model. Lets pretend we are 8 voxels away from the original orange light source. At this point, our light color is (8,0,0). The green channel is completely gone! This is no longer orange light at all, it is now dark red light.
 
-![Attenuate](/voxel/lighting/soa/Attenuate.jpg)
+![Attenuate](./Attenuate.jpg)
 
 How big of an issue is this? Well it depends. The attenuation problem only occurs when the ratio of nonzero colors is not 1:1. If we constrain all the torches in our game to a select few colors this issue will never appear. Or, we could allow colors with non-zero ratio anyways as it isn't really that noticable in most cases. If we want to stick to only 1:1 colors, we can use the following 7 colors:
 
@@ -431,7 +431,7 @@ How big of an issue is this? Well it depends. The attenuation problem only occur
 
 # Color Filters
 
-![Filter](/voxel/lighting/soa/Filter.jpg)
+![Filter](./Filter.jpg)
 
 Because we are storing the RGB color channels, we can also do color filtering! For instance, if we have red stained glass and white light passes through it, it should become red light! Doing this is fairly easy, we just give red stained glass a light filter color value of (R,G,B) = (1.0f,0.0f,0.0f). We also need to add a step in light propagation that checks if the current block has a color filter value. If it does, we simply multiply the color by the color filter. For instance, if we have white light and want to pass it through a red color filter, we will end up with:
 
