@@ -1,0 +1,1 @@
+- [Seeds of Andromeda](./voxel/lighting/soa/index.md)

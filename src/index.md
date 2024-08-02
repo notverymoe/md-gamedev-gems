@@ -1,0 +1,4 @@
+- [Index](./index.md)
+- [Voxel](./voxel/index.md)
+    - [Lighting](./voxel/lighting/index.md)
+        - [Seeds of Andromeda](./voxel/lighting/soa/index.md)
